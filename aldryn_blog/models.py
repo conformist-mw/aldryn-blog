@@ -102,7 +102,7 @@ class RelatedManager(models.Manager):
         entries = entries.distinct()
         if not entries:
             return []
-        kwargs = {'object_id__in': [entry.id for entry in entries]}
+        kwargs = {'object_id__in': entries}
 
         # aggregate and sort
         counted_tags = dict(TaggedItem.objects
