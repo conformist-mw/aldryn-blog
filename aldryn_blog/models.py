@@ -175,7 +175,7 @@ class Post(models.Model):
         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)')
     )
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
-    author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'), null=True, blank=True)
+    author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'), null=True, blank=True, on_delete=models.deletion.CASCADE)
     coauthors = models.ManyToManyField(
         to=AUTH_USER_MODEL,
         verbose_name=_('Co-Authors'),
@@ -197,7 +197,8 @@ class Post(models.Model):
         to=Category,
         verbose_name=_('Category'),
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.deletion.CASCADE
     )
 
     objects = RelatedManager()

@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from aldryn_blog import __version__
 
 REQUIREMENTS = [
-    'django-taggit>=0.24.0',
+    'django-taggit>=0.23.0',
     'django-filer',
     'django_select2==5.11.1,<6',
     'djangocms-text-ckeditor',

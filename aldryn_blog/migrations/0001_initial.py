@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AllEntriesPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AuthorsPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Name')),
                 ('slug', models.SlugField(help_text='Auto-generated. Clean it to have it re-created. WARNING! Used in the URL. If changed, the URL will change. ', max_length=255, verbose_name='Slug', blank=True)),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_blog.Category', null=True)),
+                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_blog.Category', null=True, on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'managed': True,
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='LatestEntriesPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=models.deletion.CASCADE)),
                 ('latest_entries', models.IntegerField(default=5, help_text='The number of latests entries to be displayed.')),
                 ('tags', models.ManyToManyField(help_text='Show only the blog posts tagged with chosen tags.', to='taggit.Tag', blank=True)),
             ],
@@ -95,8 +95,8 @@ class Migration(migrations.Migration):
                 ('publication_start', models.DateTimeField(default=django.utils.timezone.now, help_text='Used in the URL. If changed, the URL will change.', verbose_name='Published Since')),
                 ('publication_end', models.DateTimeField(null=True, verbose_name='Published Until', blank=True)),
                 ('app_data', app_data.fields.AppDataField(default='{}', editable=False)),
-                ('author', models.ForeignKey(verbose_name='Author', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('category', models.ForeignKey(verbose_name='Category', blank=True, to='aldryn_blog.Category', null=True)),
+                ('author', models.ForeignKey(verbose_name='Author', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.deletion.CASCADE)),
+                ('category', models.ForeignKey(verbose_name='Category', blank=True, to='aldryn_blog.Category', null=True, on_delete=models.deletion.CASCADE)),
                 ('coauthors', models.ManyToManyField(related_name='aldryn_blog_coauthors', null=True, verbose_name='Co-Authors', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('content', cms.models.fields.PlaceholderField(related_name='aldryn_blog_posts', slotname='aldryn_blog_post_content', editable=False, to='cms.Placeholder', null=True)),
                 ('key_visual', filer.fields.image.FilerImageField(verbose_name='Key Visual', blank=True, to='filer.Image', null=True)),

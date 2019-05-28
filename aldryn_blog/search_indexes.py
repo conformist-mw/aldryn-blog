@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
-from django.db.models import Q
-from django.template import RequestContext
-
 from aldryn_search.utils import get_index_base, strip_tags
+from cms.plugin_rendering import ContentRenderer
+from django.db.models import Q
+from sekizai.context import SekizaiContext
 
 from .conf import settings
 from .models import Post
+
+
+def render_plugin(request, plugin_instance):
+    renderer = ContentRenderer(request)
+    context = SekizaiContext(request)
+    context['request'] = request
+    return renderer.render_plugin(plugin_instance, context)
 
 
 class BlogIndex(get_index_base()):
@@ -40,6 +47,6 @@ class BlogIndex(get_index_base()):
         for base_plugin in plugins:
             instance, plugin_type = base_plugin.get_plugin_instance()
             if instance is not None:
-                content = strip_tags(instance.render_plugin(context=RequestContext(request)))
+                content = strip_tags(render_plugin(request, instance))
                 text_bits.append(content)
         return ' '.join(text_bits)
