@@ -3,7 +3,7 @@ import datetime
 from collections import Counter
 
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.db import models
 from django.db.models import Q
 from django.template.defaultfilters import slugify
@@ -169,13 +169,13 @@ class Post(models.Model):
         choices=settings.LANGUAGES,
         help_text=_('leave empty to display in all languages')
     )
-    key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True)
+    key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True, on_delete=models.SET_NULL)
     lead_in = HTMLField(
         verbose_name=_('Lead-in'),
         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)')
     )
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
-    author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'), null=True, blank=True, on_delete=models.deletion.CASCADE)
+    author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'), null=True, blank=True, on_delete=models.SET_NULL)
     coauthors = models.ManyToManyField(
         to=AUTH_USER_MODEL,
         verbose_name=_('Co-Authors'),
