@@ -2,7 +2,7 @@
 import datetime
 
 from django.conf import settings
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse, resolve
 from django.shortcuts import get_object_or_404
 from django.utils.translation import override, get_language_from_request
 from django.views import generic

@@ -99,7 +99,7 @@ class Migration(migrations.Migration):
                 ('category', models.ForeignKey(verbose_name='Category', blank=True, to='aldryn_blog.Category', null=True, on_delete=models.deletion.CASCADE)),
                 ('coauthors', models.ManyToManyField(related_name='aldryn_blog_coauthors', null=True, verbose_name='Co-Authors', to=settings.AUTH_USER_MODEL, blank=True)),
                 ('content', cms.models.fields.PlaceholderField(related_name='aldryn_blog_posts', slotname='aldryn_blog_post_content', editable=False, to='cms.Placeholder', null=True)),
-                ('key_visual', filer.fields.image.FilerImageField(verbose_name='Key Visual', blank=True, to='filer.Image', null=True)),
+                ('key_visual', filer.fields.image.FilerImageField(verbose_name='Key Visual', blank=True, to='filer.Image', null=True, on_delete=models.SET_NULL)),
                 ('tags', taggit.managers.TaggableManager(to='taggit.Tag', through='taggit.TaggedItem', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags')),
             ],
             options={
